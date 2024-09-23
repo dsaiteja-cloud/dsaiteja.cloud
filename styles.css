@@ -1,0 +1,71 @@
+/* Reset default browser styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body,
+html {
+  height: 100%;
+  font-family: "Montserrat", sans-serif; /* Custom font, adjust if needed */
+  overflow: hidden; /* Ensure there's no scroll */
+}
+
+#bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1; /* Keep the video in the background */
+}
+
+.content {
+  position: absolute;
+  top: 50%; /* Vertically center the content */
+  left: 50%; /* Horizontally center the content */
+  transform: translate(-50%, -50%); /* Adjust for perfect centering */
+  z-index: 2; /* Place content on top of the video */
+  text-align: center;
+  color: white;
+}
+
+.username {
+  font-size: 8vw; /* Large font size for the username */
+  font-weight: 700;
+}
+
+.surname {
+  /* color: #696666; Change this to your preferred highlight color */
+  color: #eeff04; /* Change this to your preferred highlight color */
+  font-style: italic;
+  font-family: "Titillium Web", sans-serif;
+}
+
+.designation {
+  font-size: 2.5vw; /* Medium font size for designation */
+  margin-top: 1vw;
+  font-style: normal;
+  font-weight: 200;
+}
+
+.linkedin-btn {
+  font-family: monospace;
+  margin-top: 3vw;
+  padding: 0.5vw 0.7vw;
+  background-color: #eeff04;
+  color: rgb(0, 74, 134);
+  font-size: 1.5vw;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.linkedin-btn:hover {
+  background-color: white;
+  padding: 0.4vw 0.6vw;
+  font-size: 1.4vw;
+}

@@ -3,30 +3,890 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sai Teja D - Portfolio</title>
-    <link rel="stylesheet" href="styles.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <title>Sai Teja's Retro Portfolio</title>
     <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap"
       rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
     />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background: #1a1a1a;
+        color: #00ffcc;
+        font-family: "Courier New", monospace;
+        min-height: 100vh;
+        overflow-y: auto;
+      }
+
+      .video-wrapper {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        overflow: hidden;
+      }
+
+      .video-wrapper::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1;
+      }
+
+      #bgvideo {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        min-width: 100%;
+        min-height: 100%;
+        transform: translate(-50%, -50%);
+        z-index: 0;
+      }
+
+      .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        /* center contents */
+        gap: 20px;
+        width: 90%;
+        max-width: 1200px;
+        margin: 100px auto;
+        /* center the container */
+        z-index: 1;
+        padding-bottom: 40px;
+      }
+
+      .sidebar {
+        flex: 1;
+        min-width: 250px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+      .resume {
+        background: #ff00ff;
+        border: 2px solid #00ffff;
+        padding: 8px 15px;
+        cursor: pointer;
+        box-shadow: 0 0 5px #ff00ff;
+        margin-top: 10px;
+        text-align: center;
+      }
+
+      .resume a {
+        text-decoration: none;
+        color: white;
+      }
+
+      .resume:hover {
+        background: #ffff00;
+        box-shadow: 0 0 8px #ffff00;
+      }
+      .resume:hover a {
+        color: black;
+      }
+      .resume.active {
+        background: #ffff00;
+        color: #1a1a1a;
+        box-shadow: 0 0 8px #ffff00;
+      }
+      .profile-card,
+      .skills-card {
+        background: rgb(42, 42, 42, 0.7);
+        border: 2px solid #ff00ff;
+        padding: 20px;
+        box-shadow: 0 0 10px #ff00ff;
+      }
+
+      .skills-card {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .skill-button {
+        flex: 0 1 auto;
+        white-space: nowrap;
+      }
+
+      .profile-card img {
+        width: 100%;
+        max-width: 200px;
+        height: auto;
+        object-fit: cover;
+        border: 2px solid #00ffcc;
+        box-shadow: 0 0 8px #00ffcc;
+        display: block;
+        margin: 0 auto;
+      }
+
+      .profile-card h2 {
+        color: #cbdf11;
+        text-shadow: 0 0 5px #cbdf11;
+        margin: 10px 0;
+        font-size: 2em;
+      }
+
+      .social-links a {
+        color: #00ffcc;
+        text-decoration: none;
+        margin: 0 10px;
+        font-size: 1.2em;
+      }
+
+      .social-links a:hover {
+        color: #ffff00;
+        text-shadow: 0 0 5px #ffff00;
+      }
+
+      .skills-card h3 {
+        color: #ffff00;
+        text-shadow: 0 0 5px #ffff00;
+        margin-bottom: 10px;
+      }
+
+      .skill-button {
+        background: #39ff14;
+        color: #1a1a1a;
+        border: 2px solid #ff00ff;
+        padding: 8px 15px;
+        margin: 5px;
+        display: inline-block;
+        cursor: pointer;
+        box-shadow: 0 0 5px #39ff14;
+      }
+
+      .skill-button:hover {
+        background: #ffff00;
+        color: #1a1a1a;
+        box-shadow: 0 0 8px #ffff00;
+      }
+
+      .main-content {
+        flex: 2;
+        min-width: 300px;
+        background: rgb(42, 42, 42, 0.7);
+        border: 2px solid #00ffcc;
+        padding: 20px;
+        box-shadow: 0 0 10px #00ffcc;
+        overflow-y: auto;
+        max-height: 80vh;
+      }
+
+      .tabs {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+        font-family: inherit;
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .tabs::-webkit-scrollbar {
+        display: none;
+      }
+
+      .tab-button {
+        background: #ff00ff;
+        color: white;
+        border: 2px solid #00ffff;
+        padding: 8px 15px;
+        cursor: pointer;
+        box-shadow: 0 0 5px #ff00ff;
+      }
+
+      .tab-button:hover {
+        background: #ffff00;
+        color: #1a1a1a;
+        box-shadow: 0 0 8px #ffff00;
+      }
+
+      .tab-button.active {
+        background: #ffff00;
+        color: #1a1a1a;
+        box-shadow: 0 0 8px #ffff00;
+      }
+
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+
+      .project-item {
+        margin-bottom: 15px;
+      }
+
+      .expand-button {
+        background: #ffff00;
+        color: #1a1a1a;
+        border: 2px solid #ff00ff;
+        padding: 5px 10px;
+        cursor: pointer;
+        box-shadow: 0 0 5px #ffff00;
+      }
+
+      .expand-button:hover {
+        background: #ff00ff;
+        color: white;
+        border: 2px solid yellow;
+
+        box-shadow: 0 0 8px yellow;
+      }
+
+      #certification img {
+        width: 50%;
+      }
+
+      #certification a {
+        background: #ffff00;
+        border: 2px solid #ff00ff;
+        padding: 1px 1px;
+        cursor: pointer;
+        color: #1a1a1a;
+        box-shadow: 0 0 5px #ffff00;
+        text-decoration: none;
+        font-size: 15px;
+      }
+
+      #certification a:hover {
+        background: #ff00ff;
+        color: white;
+        border: 2px solid yellow;
+        text-decoration: none;
+      }
+
+      #contact strong {
+        color: yellow;
+      }
+
+      #contact a {
+        color: #00ffcc;
+        cursor: pointer;
+        text-decoration: none;
+      }
+
+      #contact a:hover {
+        color: yellow;
+        text-decoration: none;
+      }
+
+      .project-details {
+        display: none;
+        margin-top: 10px;
+      }
+
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      ul li::before {
+        content: ">";
+        color: #ff00ff;
+        margin-right: 10px;
+      }
+
+      @media (max-width: 768px) {
+        body {
+          overflow-y: scroll;
+        }
+
+        .container {
+          flex-direction: column;
+          height: auto;
+          padding: 20px;
+        }
+
+        .main-content {
+          max-height: 80vh;
+          margin-top: 60px;
+          margin: auto;
+          width: 80%;
+        }
+
+        .tabs {
+          overflow-x: auto;
+          white-space: nowrap;
+        }
+
+        .profile-card,
+        .skills-card {
+          border: 2px solid #ff00ff;
+          padding: 20px;
+          box-shadow: 0 0 10px #ff00ff;
+          align-items: center;
+          width: 80%;
+          display: block;
+          margin: auto;
+        }
+      }
+    </style>
   </head>
+
   <body>
-    <div class="overlay"></div>
-    <video autoplay muted loop playsinline id="bg-video">
-      <source src="bgvideo.mp4" type="video/mp4" />
-      Your browser does not support the video tag.
-    </video>
-    <div class="content">
-      <h1 class="username"><span class="surname">d</span> SAI TEJA</h1>
-      <h2 class="designation">D A T A &nbsp; E N G I N E E R</h2>
-      <a
-        href="https://www.linkedin.com/in/sai-teja-d-08ab7032a/"
-        target="_blank"
-      >
-        <button class="linkedin-btn">LinkedIn</button>
-      </a>
+    <div class="container">
+      <div class="video-wrapper">
+        <video autoplay muted loop playsinline id="bgvideo">
+          <source src="bgvideo.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <div class="sidebar">
+        <div class="profile-card">
+          <img src="profilepicbw.jpg" alt="Sai Teja's Profile Picture" />
+          <h2>Sai Teja, D</h2>
+          <p>DevOps Engineer</p>
+          <div class="social-links">
+            <a
+              href="https://www.linkedin.com/in/saitejadhondha/"
+              target="_blank"
+              rel="noopener noreferrer"
+              ><i class="fab fa-linkedin"></i> LinkedIn</a
+            >
+            <a
+              href="https://dsaiteja.cloud"
+              target="_blank"
+              rel="noopener noreferrer"
+              ><i class="fas fa-globe"></i> Website</a
+            >
+          </div>
+          <div class="resume">
+            <strong
+              ><a
+                href="./Sai_Teja_D_AWS_DevOps_6.5_yoe_CV_2025.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Download CV</a
+              ></strong
+            >
+          </div>
+        </div>
+        <div class="skills-card">
+          <h3>Skills</h3>
+          <br />
+          <div class="skill-buttons">
+            <div class="skill-button"><i class="fas fa-cloud"></i> AWS</div>
+            <div class="skill-button"><i class="fas fa-tools"></i> DevOps</div>
+            <div class="skill-button">
+              <i class="fas fa-code-branch"></i> CI/CD
+            </div>
+            <div class="skill-button"><i class="fas fa-terminal"></i> Git</div>
+            <div class="skill-button"><i class="fab fa-docker"></i> Docker</div>
+            <div class="skill-button">
+              <i class="fas fa-cubes"></i> Kubernetes
+            </div>
+            <div class="skill-button">
+              <i class="fas fa-hammer"></i> Terraform
+            </div>
+            <div class="skill-button"><i class="fab fa-python"></i> Python</div>
+            <div class="skill-button">
+              <i class="fas fa-terminal"></i> Shell Scripting
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="main-content">
+        <div class="tabs">
+          <button class="tab-button" onclick="showTab('about')">
+            About Me
+          </button>
+          <button class="tab-button active" onclick="showTab('experience')">
+            Work Experience
+          </button>
+          <!-- <button class="tab-button" onclick="showTab('projects')">
+            Projects
+          </button> -->
+          <button class="tab-button" onclick="showTab('certification')">
+            Certification
+          </button>
+          <button class="tab-button" onclick="showTab('contact')">
+            Contact
+          </button>
+        </div>
+        <div id="about" class="tab-content">
+          <h3>About Me</h3>
+          <ul>
+            <li>
+              6.5 years of experience in the IT industry, with 4+ years in
+              DevOps focusing on CI/CD, automation, Cloud and System
+              Administration.
+            </li>
+            <li>
+              Expert in AWS CI/CD: Built and managed pipelines using
+              CodePipeline, CloudFormation, CodeCommit, CodeBuild, S3, VPC, IAM,
+              RDS, Lambda, and other major AWS services.
+            </li>
+            <li>
+              Automation & Scripting: Developed scripts using Shell, Python, to
+              automate deployments and system tasks.
+            </li>
+            <li>
+              Containerization: Proficient in containerization (Docker,
+              Kubernetes).
+            </li>
+            <li>
+              Infrastructure as Code: Designed & deployed AWS cloud environments
+              with CloudFormation (YAML, JSON) and Terraform.
+            </li>
+            <li>
+              SDLC & Agile: Strong background in Scrum, Agile, and Waterfall
+              methodologies, supporting DevOps culture and best practices.
+            </li>
+          </ul>
+        </div>
+        <div id="experience" class="tab-content active">
+          <h3>Work Experience</h3>
+          <div class="project-item">
+            <p>
+              <strong>Senior Associate Consultant</strong> <br />
+              [ HCL Tech | 13-Feb-2023 to 28-Sep-2023 ]
+            </p>
+            <button class="expand-button" onclick="toggleDetails(this)">
+              Expand
+            </button>
+            <div class="project-details">
+              <ul>
+                <li>
+                  Built and managed end-to-end CI/CD pipelines using AWS
+                  CodePipeline, CodeCommit, CodeBuild, and CodeDeploy.
+                </li>
+                <li>
+                  Extensive working experience with broad range of AWS Cloud
+                  Services like S3, IAM, VPC, EC2, ECS, ECR, ELB, EBS, API
+                  Gateway, Auto Scaling, Route53, RDS, SNS, SQS, SES, Lambda,
+                  CloudFront, Cloudwatch, CloudTrail, Security Groups,..etc.
+                </li>
+                <li>
+                  Automated infrastructure provisioning with CloudFormation and
+                  Terraform to bring up multiple Environments such as Dev, QA
+                  and Prod.
+                </li>
+                <li>
+                  Migrated environments from ECS to Kubernetes on on-prem
+                  servers.
+                </li>
+                <li>
+                  Automated tasks using Shell scripting, Python and Javascript.
+                </li>
+                <li>
+                  Developed AWS Python Lambda functions to detect event statuses
+                  and trigger email notifications by using SNS and SES.
+                </li>
+                <li>
+                  Integrated SonarQube for code quality checks within CI/CD
+                  pipelines.
+                </li>
+                <li>
+                  Coordinated with Development and Testing teams to support
+                  DevOps activities.
+                </li>
+                <li>
+                  Created multiple Cloudwatch rules to trigger and notify about
+                  the status of AWS services.
+                </li>
+                <li>
+                  Implemented cost optimization strategies using AWS CLI for
+                  resource tagging.
+                </li>
+                <li>
+                  Enhanced the security of CI/CD pipelines by implementing
+                  manager approval stages and enforcing the principle of least
+                  privilege using IAM policies, security groups, and other AWS
+                  security best practices.
+                </li>
+                <li>
+                  Documented and Authored multiple guides covering installation,
+                  configuration, and end-to-end project setup in the Confluence
+                  page.
+                </li>
+                <li>
+                  Collaborated with developers to support AngularJS (Javascript)
+                  and backend microservices using Java Spring Boot project
+                  source code.
+                </li>
+                <li>
+                  Established DevOps practices to containerize Angular and
+                  Spring Boot applications using Docker, integrated them into
+                  CI/CD pipelines, and deployed on Kubernetes clusters for
+                  scalable delivery.
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="project-item">
+            <p>
+              <strong>Technical Lead</strong>
+              <br />
+              [ Collabera (Ascendion) | 04-Apr-2022 to 12-Jan-2023 ]
+            </p>
+            <button class="expand-button" onclick="toggleDetails(this)">
+              Expand
+            </button>
+            <div class="project-details">
+              <ul>
+                <li>
+                  Built and managed end-to-end CI/CD pipelines using AWS
+                  CodePipeline, CodeCommit, CodeBuild, and CodeDeploy.
+                </li>
+                <li>
+                  Extensive working experience with broad range of AWS Cloud
+                  Services like S3, IAM, VPC, EC2, ECS, ECR, ELB, EBS, API
+                  Gateway, Auto Scaling, Route53, RDS, SNS, SQS, SES, Lambda,
+                  CloudFront, Cloudwatch, CloudTrail, Security Groups,..etc.
+                </li>
+                <li>
+                  Automated infrastructure provisioning with CloudFormation and
+                  Terraform to bring up multiple Environments such as Dev, QA
+                  and Prod.
+                </li>
+                <li>
+                  Migrated environments from ECS to Kubernetes on on-prem
+                  servers.
+                </li>
+                <li>
+                  Automated tasks using Shell scripting, Python and Javascript.
+                </li>
+                <li>
+                  Developed AWS Python Lambda functions to detect event statuses
+                  and trigger email notifications by using SNS and SES.
+                </li>
+                <li>
+                  Integrated SonarQube for code quality checks within CI/CD
+                  pipelines.
+                </li>
+                <li>
+                  Coordinated with Development and Testing teams to support
+                  DevOps activities.
+                </li>
+                <li>
+                  Created multiple Cloudwatch rules to trigger and notify about
+                  the status of AWS services.
+                </li>
+                <li>
+                  Implemented cost optimization strategies using AWS CLI for
+                  resource tagging.
+                </li>
+                <li>
+                  Enhanced the security of CI/CD pipelines by implementing
+                  manager approval stages and enforcing the principle of least
+                  privilege using IAM policies, security groups, and other AWS
+                  security best practices.
+                </li>
+                <li>
+                  Documented and Authored multiple guides covering installation,
+                  configuration, and end-to-end project setup in the Confluence
+                  page.
+                </li>
+                <li>
+                  Collaborated with developers to support AngularJS (Javascript)
+                  and backend microservices using Java Spring Boot project
+                  source code.
+                </li>
+                <li>
+                  Established DevOps practices to containerize Angular and
+                  Spring Boot applications using Docker, integrated them into
+                  CI/CD pipelines, and deployed on Kubernetes clusters for
+                  scalable delivery.
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="project-item">
+            <p>
+              <strong>Senior Software Engineer</strong><br />
+              [ Infosys | 03-Jun-2021 to 04-Aug-2021 ]
+            </p>
+            <button class="expand-button" onclick="toggleDetails(this)">
+              Expand
+            </button>
+            <div class="project-details">
+              <ul>
+                <li>
+                  Implemented CI/CD with GitHub pipelines Integration using
+                  Jenkins, Docker, Kubernetes.
+                </li>
+                <li>
+                  Took weekly back-ups of Jenkins home directory using Shell
+                  Script Cron job.
+                </li>
+                <li>
+                  Used Kubernetes to orchestrate the deployment, scaling and
+                  management of Docker Containers.
+                </li>
+                <li>
+                  Created YAML files for K8 objects – Deployment, Service,
+                  Ingress, Configmaps, Secrets, Sidecar containers,
+                  Statefulsets.
+                </li>
+                <li>
+                  Installed Jenkins plugins, configured SCM polling for
+                  immediate Build with Maven.
+                </li>
+                <li>
+                  Configured and monitored applications using Prometheus and
+                  Grafana.
+                </li>
+                <li>
+                  Implemented AWS services such as EC2, S3, EBS, ELB, and Auto
+                  Scaling Groups.
+                </li>
+                <li>
+                  Managed weekly client calls to resolve issues and provide
+                  project status updates.
+                </li>
+                <li>
+                  Utilized Jira for issue reporting, status, and activity
+                  planning.
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="project-item">
+            <p>
+              <strong>Senior Associate Consultant</strong> <br />
+              [ Quest Global | 04-Jan-2021 to 05-Apr-2021 ]
+            </p>
+            <button class="expand-button" onclick="toggleDetails(this)">
+              Expand
+            </button>
+            <div class="project-details">
+              <ul>
+                <li>
+                  Implemented CI/CD with GitHub pipelines Integration using
+                  Jenkins, Docker, Kubernetes.
+                </li>
+                <li>
+                  Took weekly back-ups of Jenkins home directory using Shell
+                  Script Cron job.
+                </li>
+                <li>
+                  Used Kubernetes to orchestrate the deployment, scaling and
+                  management of Docker Containers.
+                </li>
+                <li>
+                  Created YAML files for K8 objects – Deployment, Service,
+                  Ingress, Configmaps, Secrets, Sidecar containers,
+                  Statefulsets.
+                </li>
+                <li>
+                  Installed Jenkins plugins, configured SCM polling for
+                  immediate Build with Maven.
+                </li>
+                <li>
+                  Configured and monitored applications using Prometheus and
+                  Grafana.
+                </li>
+                <li>
+                  Implemented AWS services such as EC2, S3, EBS, ELB, and Auto
+                  Scaling Groups.
+                </li>
+                <li>
+                  Managed weekly client calls to resolve issues and provide
+                  project status updates.
+                </li>
+                <li>
+                  Utilized Jira for issue reporting, status, and activity
+                  planning.
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="project-item">
+            <p>
+              <strong>System Engineer</strong> <br />
+              [ Atos | 05-Nov-2018 to 30-Dec-2020 ]
+            </p>
+            <button class="expand-button" onclick="toggleDetails(this)">
+              Expand
+            </button>
+            <div class="project-details">
+              <ul>
+                <li>
+                  Created CI/CD Pipelines by integrating GitHub, Jenkins, Nexus,
+                  SonarQube and Tomcat.
+                </li>
+                <li>
+                  Automate the build Process Using Maven and Jenkins.
+                  Coordinated with Development, QA, and Project Managers for the
+                  timely deployment of Builds and delivery of Releases.
+                </li>
+                <li>
+                  Integrated Jenkins with various DevOps tools such as Nexus,
+                  SonarQube.
+                </li>
+                <li>
+                  Branching, Tagging, Release Activities on Version Control
+                  Tools - GIT.
+                </li>
+                <li>Generating the Sonar reports for the maven modules.</li>
+                <li>
+                  Analyzed build failures, verified logs, and resolved
+                  deployment issues in Jenkins.
+                </li>
+                <li>
+                  Enabling the SonarQube Quality gates for the modules of the
+                  project to maintain the Stability of the code quality.
+                </li>
+                <li>
+                  Managed Nexus repositories for artifacts (JAR, WAR, EAR).
+                </li>
+                <li>
+                  Managed the Maven Repository using Nexus tool and used the
+                  same to share the snapshots and releases of internal projects.
+                </li>
+                <li>
+                  Deployed the applications to Tomcat Application Server and
+                  static content to Apache web servers.
+                </li>
+                <li>Ensured successful execution of nightly builds.</li>
+                <li>
+                  Responsible for nightly and release builds and regression
+                  testing.
+                </li>
+                <li>
+                  Built and maintained excellent Documentation on the Software
+                  Release Management procedures for each Release.
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="project-item">
+            <p>
+              <strong>System Analyst</strong> <br />
+              [ Magna Infotech (Quess Corp Ltd) | 28-Nov-2016 to 31-Oct-2018 ]
+            </p>
+            <button class="expand-button" onclick="toggleDetails(this)">
+              Expand
+            </button>
+            <div class="project-details">
+              <ul>
+                <li>
+                  System Administration: Provided L2/L3 support for IT
+                  infrastructure, including Windows and Linux environments.
+                </li>
+                <li>
+                  Access Management: Administrator for System access, Door
+                  Access Controls (ODC) of Entire Atos India Location like
+                  ODC’s, Server Rooms, HUB Rooms, Security Dedicated areas, Etc.
+                </li>
+                <li>
+                  User Support: On-premises/Remote support for Users Application
+                  Issues such as System applications, MS applications, Network
+                  issues, VPN Connection issues.
+                </li>
+                <li>
+                  Installing & Applying Operating system updates, patches, and
+                  configuration changes.
+                </li>
+                <li>
+                  Inventory & Asset Management: Assigned, Managed, and
+                  maintained all inventories such as desktop, servers, printers,
+                  laptops, locks, headphones, Access cards and smart card
+                  readers.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- <div id="projects" class="tab-content">
+          <h3>Projects</h3>
+          <div class="project-item">
+            <p><strong>AWS CI/CD Pipeline Implementation</strong></p>
+            <button class="expand-button" onclick="toggleDetails(this)">
+              Expand
+            </button>
+            <div class="project-details">
+              <p>
+                Built end-to-end CI/CD pipelines using AWS CodePipeline,
+                CodeCommit, CodeBuild, and CodeDeploy for multiple projects.
+              </p>
+            </div>
+          </div>
+          <div class="project-item">
+            <p><strong>Infrastructure Automation with IaC</strong></p>
+            <button class="expand-button" onclick="toggleDetails(this)">
+              Expand
+            </button>
+            <div class="project-details">
+              <p>
+                Automated infrastructure provisioning using CloudFormation and
+                Terraform, deploying multiple environments like Dev, QA, and
+                Prod.
+              </p>
+            </div>
+          </div>
+          <div class="project-item">
+            <p><strong>Containerization and Orchestration</strong></p>
+            <button class="expand-button" onclick="toggleDetails(this)">
+              Expand
+            </button>
+            <div class="project-details">
+              <p>
+                Migrated applications from ECS to Kubernetes, managing
+                containerized applications with Docker and Kubernetes.
+              </p>
+            </div>
+          </div>
+        </div> -->
+        <div id="certification" class="tab-content">
+          <h3>Certification</h3>
+          <img
+            src="awscert.jpeg"
+            alt="AWS Certified Solution Architect - Associate"
+          />
+          <p>
+            <strong>AWS Certified Solution Architect - Associate</strong>
+            <a
+              href="https://www.credly.com/badges/bd6f245c-328e-43d4-aa26-d9dfb2a356f8/public_url"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Link</a
+            >
+          </p>
+        </div>
+        <div id="contact" class="tab-content">
+          <h3>Contact</h3>
+          <p>
+            <strong>Email:</strong>
+            dsaiteja.cloud@gmail.com<br /><strong>LinkedIn:</strong>
+            <a
+              href="https://www.linkedin.com/in/saitejadhondha/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >https://www.linkedin.com/in/saitejadhondha/</a
+            >
+          </p>
+        </div>
+      </div>
     </div>
+
+    <script>
+      function showTab(tabId) {
+        document.querySelectorAll(".tab-content").forEach((content) => {
+          content.classList.remove("active");
+        });
+        document.querySelectorAll(".tab-button").forEach((button) => {
+          button.classList.remove("active");
+        });
+        document.getElementById(tabId).classList.add("active");
+        document
+          .querySelector(`button[onclick="showTab('${tabId}')"]`)
+          .classList.add("active");
+      }
+
+      function toggleDetails(button) {
+        const details = button.nextElementSibling;
+        details.style.display =
+          details.style.display === "block" ? "none" : "block";
+        button.textContent =
+          details.style.display === "block" ? "Collapse" : "Expand";
+      }
+    </script>
   </body>
 </html>
